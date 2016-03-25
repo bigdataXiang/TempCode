@@ -54,8 +54,7 @@ public class Demo {
 		// Check_countFlowout_tidy("D:/人口数据/3级数据-统计人口流入流出数据/countFlowout-tidy.txt");
 
 		// Check_countFlowout("D:/人口数据/3级数据-统计人口流入流出数据/countFlowout.txt");
-		CompareAmouts("D:/人口数据/3级数据-统计人口流入流出数据/countFlowout-Check.txt",
-				"D:/人口数据/3级数据-统计人口流入流出数据/countFlowout-tidy-Check.txt");
+		CompareAmouts("D:/人口数据/3级数据-统计人口流入流出数据/key2.txt","D:/人口数据/3级数据-统计人口流入流出数据/countFlowout-tidy-Check.txt");
 		System.out.println("OK!");
 	}
 /**
@@ -78,9 +77,17 @@ public class Demo {
 		for (int a2 = 0; a2 < Pois2.size(); a2++) {
 			poi2 = Pois2.elementAt(a2);
 			String[] arr2 = poi2.split(":");
-			map2.put(arr2[0], Integer.parseInt(arr2[1]));
+			if(map2.get(arr2[0])!=null){
+				int s=map2.get(arr2[0]);
+				System.out.println(arr2[0]+":"+s+arr2[1]);
+				map2.put(arr2[0], Integer.parseInt(s+arr2[1]));
+			}else{
+				map2.put(arr2[0], Integer.parseInt(arr2[1]));
+			}
+		    map2.put(arr2[0], Integer.parseInt(arr2[1]));
 		}
 			Iterator<String> it1 = map1.keySet().iterator();
+			System.out.println("map1.size()="+map1.size());
 			while (it1.hasNext()) {
 
 				String key1;
@@ -91,17 +98,16 @@ public class Demo {
 
 				//System.out.println("map1-" + key1 + ":" + value1);
 				Iterator<String> it2 = map2.keySet().iterator();
-
+				System.out.println("map2.size()="+map2.size());
 				while (it2.hasNext()) {
 					String key2;
 					int value2;
-
 					key2 = (String) it2.next();
 					value2 = map2.get(key2);
 					//System.out.println("map2-" + key2 + ":" + value2);
 					if ((key1.equals(key2)) && (value1 == value2)) {
 						//FileTool.Dump(key1 + ":" + value1, "D:/人口数据/3级数据-统计人口流入流出数据/key1=key2.txt", "utf-8");
-						FileTool.Dump(key2 + ":" + value2, "D:/人口数据/3级数据-统计人口流入流出数据/key2.txt", "utf-8");
+						//FileTool.Dump(key2 + ":" + value2, "D:/人口数据/3级数据-统计人口流入流出数据/key2.txt", "utf-8");
 						it2.remove();
 						break;
 					}else if((key1.equals(key2)) && (value1 != value2)){
@@ -110,6 +116,7 @@ public class Demo {
 						break;
                      }
 				}
+               
 
 			}
 		}
